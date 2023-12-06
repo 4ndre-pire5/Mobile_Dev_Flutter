@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_flutter/pages/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +11,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var _username = '';
   var _password = '';
+
+  signIn() {
+    if (_username == 'uedsonreis' && _password == '123456') {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+    } else {
+      alert(context, 'Usuário/senha inválido(a)!');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.login),
-                onPressed: () => save(),
+                onPressed: () => signIn(),
                 label: Text('Entrar'),
               ),
             ),
@@ -57,6 +67,4 @@ class _LoginPageState extends State<LoginPage> {
       )),
     );
   }
-
-  save() {}
 }
