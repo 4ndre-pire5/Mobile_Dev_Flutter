@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_flutter/components/my_button.dart';
+import 'package:mobile_dev_flutter/components/my_input.dart';
 import 'package:mobile_dev_flutter/pages/home.dart';
+import 'package:mobile_dev_flutter/pages/util.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,40 +32,15 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          TextFormField(
-            autocorrect: false,
-            enableSuggestions: false,
-            decoration: const InputDecoration(
-              contentPadding:
-                  EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-              border: UnderlineInputBorder(),
-              labelText: 'Login',
-            ),
-            onChanged: (value) => setState(() => _username = value),
+          MyInput(
+              text: 'Login',
+              change: (value) => setState(() => _username = value)),
+          MyInput(
+            text: 'Senha',
+            change: (value) => setState(() => _password = value),
+            isObscure: true,
           ),
-          TextFormField(
-            obscureText: true,
-            autocorrect: false,
-            enableSuggestions: false,
-            decoration: const InputDecoration(
-              contentPadding:
-                  EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-              border: UnderlineInputBorder(),
-              labelText: 'Senha',
-            ),
-            onChanged: (value) => setState(() => _password = value),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.login),
-                onPressed: () => signIn(),
-                label: Text('Entrar'),
-              ),
-            ),
-          )
+          MyButton(text: 'Entrar', icon: Icons.login, press: signIn)
         ],
       )),
     );
