@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_flutter/pages/login.dart';
 import 'package:mobile_dev_flutter/pages/user.dart';
+import 'package:mobile_dev_flutter/services/user_service.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  State<MyHomePage> createState() => _HomePageState();
+
+}
+
+class _HomePageState extends State<MyHomePage>{
   final _title = 'Listagem de Usuários';
+  final _service = UserService();
+
+  Future<List<dynamic>> fetchUsers() async {
+    try {
+      return await _service.getList();
+    } 
+    catch (e){
+      return [];
+    }
+  }
 
   void goToCreateUser(context) {
     Navigator.push(
@@ -33,18 +50,38 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text('Usuário 1'),
-            Text('Usuário 2'),
-            Text('Usuário 3'),
-            Text('Usuário 4'),
-            Text('Usuário 5'),
-          ],
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: _buildList(),
       ),
+    );
+  }
+
+  Widget _buildList() {
+    return FutureBuilder(
+      future: fetchUsers(),
+      builder: (context, snapshot) {
+        List<dynamic> users = snapshot.data ?? [];
+
+        return ListView.builder(
+          itemCount: users.length,
+          itemBuilder: (context, index){
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Text(users[index]['name']),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Text(users[index]['username']),
+                )
+              ],
+            );
+          }
+        );
+      },
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:mobile_dev_flutter/components/my_button.dart';
 import 'package:mobile_dev_flutter/components/my_input.dart';
 import 'package:mobile_dev_flutter/pages/home.dart';
 import 'package:mobile_dev_flutter/pages/util.dart';
+import 'package:mobile_dev_flutter/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,16 +13,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final AuthService authService = AuthService();
+
   var _username = '';
   var _password = '';
 
   signIn() {
-    if (_username == 'uedsonreis' && _password == '123456') {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
-    } else {
-      alert(context, 'Usuário/senha inválido(a)!');
-    }
+    authService.login(_username, _password).then((value) {
+      if (value != null && value['token'] != null){
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => const MyHomePage())
+        );
+      }
+      else {
+        alert(context, 'Usuário/Senha inválido(a)!');  
+      }
+    });
   }
 
   @override
