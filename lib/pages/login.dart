@@ -29,20 +29,22 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Acesso')),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          MyInput(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            MyInput(
               text: 'Login',
-              change: (value) => setState(() => _username = value)),
-          MyInput(
-            text: 'Senha',
-            change: (value) => setState(() => _password = value),
-            isObscure: true,
-          ),
-          MyButton(text: 'Entrar', icon: Icons.login, press: signIn)
-        ],
-      )),
+              change: (value) => setState(() => _username = value)
+            ),
+            MyInput(
+              text: 'Senha',
+              change: (value) => setState(() => _password = value),
+              isObscure: true,
+            ),
+            MyButton(text: 'Entrar', icon: Icons.login, press: signIn)
+          ],
+        )
+      ),
     );
   }
 }
