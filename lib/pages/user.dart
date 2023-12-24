@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev_flutter/components/my_button.dart';
 import 'package:mobile_dev_flutter/components/my_input.dart';
 import 'package:mobile_dev_flutter/pages/util.dart';
+import 'package:mobile_dev_flutter/pages/home.dart';
+import 'package:mobile_dev_flutter/services/user_service.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -11,6 +13,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  final _service = UserService();
   var _name = '';
   var _username = '';
   var _password = '';
@@ -33,6 +36,13 @@ class _UserPageState extends State<UserPage> {
       alert(context, 'Senha não confere');
       return;
     }
+
+    _service.createUser(_name, _username, _password).then((value) {
+      if (value != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+      }
+    });
 
     Navigator.pop(context);
   }

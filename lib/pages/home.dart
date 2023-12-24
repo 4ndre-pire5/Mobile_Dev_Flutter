@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_flutter/pages/login.dart';
 import 'package:mobile_dev_flutter/pages/user.dart';
+import 'package:mobile_dev_flutter/pages/edituser.dart';
 import 'package:mobile_dev_flutter/services/user_service.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,7 +18,9 @@ class _HomePageState extends State<MyHomePage>{
 
   Future<List<dynamic>> fetchUsers() async {
     try {
-      return await _service.getList();
+      // return await _service.getList();
+      List<dynamic> list = await _service.getList();
+      return list;
     } 
     catch (e){
       return [];
@@ -67,7 +70,7 @@ class _HomePageState extends State<MyHomePage>{
           itemCount: users.length,
           itemBuilder: (context, index){
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(5),
@@ -76,6 +79,22 @@ class _HomePageState extends State<MyHomePage>{
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Text(users[index]['username']),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditUserPage(
+                            userId: (users[index]['id']).toString()
+                          ),
+                        )
+                      );
+                    },
+                    child: const Text('Editar'),
+                  ),
                 )
               ],
             );

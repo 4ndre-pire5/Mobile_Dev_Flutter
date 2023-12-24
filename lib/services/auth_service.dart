@@ -7,7 +7,7 @@ import 'package:mobile_dev_flutter/services/session_service.dart';
 
 class AuthService{
 
-  final String _baseUrl = 'http://192.168.100.17:3030/auth/login';
+  final String _baseUrl = 'http://192.168.1.110:3030/auth/login';
 
   final SessionService _session = SessionService();
 
