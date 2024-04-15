@@ -29,6 +29,7 @@ class _EditUserPage extends State<EditUserPage> {
     try {
       final Map<String, dynamic> userData =
           await _service.getUserById(widget.userId);
+      print(userData['password']);
 
     if (userData.containsKey('password')) {
       password.text = userData['password'];
@@ -68,6 +69,7 @@ class _EditUserPage extends State<EditUserPage> {
       };
 
       await _service.updateUser(widget.userId, user);
+      print(user);
       print('Usuário atualizado');
 
       Navigator.pop(context);
@@ -98,7 +100,7 @@ class _EditUserPage extends State<EditUserPage> {
                 controller: password,
                 decoration: const InputDecoration(labelText: 'password'),
               ),
-              MyButton(text: 'Atualizar', icon: Icons.save, press: save),
+              MyButton(text: 'Atualizar', icon: Icons.save, press: save)
             ],
           ),
       )

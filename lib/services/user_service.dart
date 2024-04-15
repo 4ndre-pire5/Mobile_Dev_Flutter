@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 
 class UserService{
   
-  final String _baseUrl = 'http://192.168.1.110:3030/users';
+  // final String _baseUrl = 'http://192.168.1.110:3030/users';
+  final String _baseUrl = 'http://192.168.100.17:3030/users';
+
   final SessionService _session = SessionService();
 
   Future<List<dynamic>> getList() async{
@@ -60,14 +62,15 @@ class UserService{
         }
       )
     );
+
     if (response.statusCode == 201) {
-      return ('User created with success');
+      return('User created with success');
     } else {
-      return ('${response.statusCode}');
+      return('${response.statusCode}');
     }
   }
 
-  Future<Map<String, dynamic>> getUserById(String userId) async {
+  Future<Map<String, dynamic>>  getUserById(String userId) async {
     dynamic logged = await _session.getLoggedUser();
 
     if (logged == null) {
@@ -88,7 +91,6 @@ class UserService{
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
       return data;
     }
     throw HttpException(response.body, uri: uri);
@@ -106,14 +108,14 @@ class UserService{
 
       String token = logged['token'];
 
-      final response = await http.put(uri,
+      final response = await http.put(
+        uri,
         headers: <String, String>{
           HttpHeaders.contentTypeHeader: appJson,
           HttpHeaders.authorizationHeader: "Bearer $token"
         },
         body: jsonEncode(user)
       );
-      print(user);
 
       if (response.statusCode == 200) {
         print('Usuário atualizado com sucesso');

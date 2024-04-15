@@ -38,11 +38,9 @@ class _UserPageState extends State<UserPage> {
     }
 
     _service.createUser(_name, _username, _password).then((value) {
-      if (value != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const MyHomePage()));
-      }
-    });
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
+        });
 
     Navigator.pop(context);
   }
